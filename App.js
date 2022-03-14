@@ -6,6 +6,7 @@ import GreetingScreen from './src/screens/GreetingScreen';
 import ListScreen from './src/screens/ListScreen';
 import ImageScreen from './src/screens/ImageScreen';
 import CounterScreen from './src/screens/CounterScreen';
+import ColorScreen from './src/screens/ColorScreen';
 
 // Routes without home screen
 const routeConfigMap = {
@@ -14,6 +15,7 @@ const routeConfigMap = {
   List: ListScreen,
   Image: ImageScreen,
   Counter: CounterScreen,
+  Color: ColorScreen,
 };
 
 const navigator = createStackNavigator(
@@ -22,7 +24,7 @@ const navigator = createStackNavigator(
     ...routeConfigMap
   },
   {
-    initialRouteName: "Counter",
+    initialRouteName: "Color",
     initialRouteParams: {
       routes: Object.keys(routeConfigMap)
     },
