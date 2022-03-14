@@ -8,7 +8,7 @@ const GreetingScreen = ({ name = 'Tim' }) => {
   return <>
     <Text style={[styles.common, styles.header]}>{header}</Text>
     <Text style={[styles.common, styles.subHeader]}>{subHeader}</Text>
-  </>
+  </>;
 };
 
 const styles = StyleSheet.create({
