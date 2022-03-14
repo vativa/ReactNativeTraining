@@ -5,13 +5,15 @@ import ComponentsScreen from './src/screens/ComponentsScreen';
 import GreetingScreen from './src/screens/GreetingScreen';
 import ListScreen from './src/screens/ListScreen';
 import ImageScreen from './src/screens/ImageScreen';
+import CounterScreen from './src/screens/CounterScreen';
 
 // Routes without home screen
 const routeConfigMap = {
   Components: ComponentsScreen,
   Greeting: GreetingScreen,
   List: ListScreen,
-  Image: ImageScreen
+  Image: ImageScreen,
+  Counter: CounterScreen,
 };
 
 const navigator = createStackNavigator(
@@ -20,7 +22,7 @@ const navigator = createStackNavigator(
     ...routeConfigMap
   },
   {
-    initialRouteName: "Image",
+    initialRouteName: "Home",
     initialRouteParams: {
       routes: Object.keys(routeConfigMap)
     },
