@@ -22,7 +22,7 @@ const navigator = createStackNavigator(
     ...routeConfigMap
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Counter",
     initialRouteParams: {
       routes: Object.keys(routeConfigMap)
     },
