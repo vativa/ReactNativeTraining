@@ -1,16 +1,28 @@
-import React from 'react';
-import { Button, Text, View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Button, FlatList, Text, View, StyleSheet } from 'react-native';
 
 const ColorScreen = () => {
-  const [rgb, hex] = randomColor();
+  const [colors, setColors] = useState([]);
   return <View style={styles.view}>
-    <Text style={styles.text}>ColorScreen</Text>
-    <Button title="Add a Color" onPress={() => {}} />
-    <View style={styles.view}>
-      <Text style={styles.text}>{hex}, {rgb}</Text>
-      <View style={[styles.box, { backgroundColor: hex }]} />
+    <View style={styles.header}>
+      <Text style={styles.text}>ColorScreen</Text>
     </View>
-  </View>
+    <View style={[styles.view, { marginBottom: 20 }]}>
+      <Button title={`Add a Color (${colors.length} added)`} onPress={() => {
+        setColors([randomColor(), ...colors]);
+      }} />
+    </View>
+    <FlatList
+      data={colors}
+      keyExtractor={({ hex }) => hex}
+      renderItem={({ item: { hex, rgb }, index }) => {
+        return <View style={styles.view}>
+          <Text style={styles.text}>{hex}, {rgb}</Text>
+          <View style={[styles.box, { backgroundColor: hex }]} />
+        </View>;
+      }}
+    />
+  </View>;
 };
 
 function hex(c) {
@@ -20,14 +32,18 @@ function hex(c) {
 
 const randomColor = () => {
   const r = Math.floor(Math.random() * 256);
-  const g= Math.floor(Math.random() * 256);
-  const b= Math.floor(Math.random() * 256);
-  return [`rgb(${r}, ${g}, ${b})`, `#${hex(r)}${hex(g)}${hex(b)}`]
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return { hex: `#${hex(r)}${hex(g)}${hex(b)}`, rgb: `rgb(${r}, ${g}, ${b})` };
 };
 
 const styles = StyleSheet.create({
+  header: {
+    margin: 20,
+  },
   view: {
-    margin: 10,
+    marginBottom: 10,
+    marginHorizontal: 10,
   },
   text: {
     fontSize: 20,
@@ -37,7 +53,6 @@ const styles = StyleSheet.create({
     height: 100,
     margin: 10,
     borderWidth: 1,
-    backgroundColor: 'rgb(0, 255, 0)'
   }
 });
 
