@@ -26,7 +26,7 @@ const navigator = createStackNavigator(
     ...routeConfigMap
   },
   {
-    initialRouteName: "ColorMix",
+    initialRouteName: "Counter",
     initialRouteParams: {
       routes: Object.keys(routeConfigMap).reverse()
     },
