@@ -7,6 +7,7 @@ import ListScreen from './src/screens/ListScreen';
 import ImageScreen from './src/screens/ImageScreen';
 import CounterScreen from './src/screens/CounterScreen';
 import ColorScreen from './src/screens/ColorScreen';
+import ColorMixScreen from './src/screens/ColorMixScreen';
 
 // Routes without home screen
 const routeConfigMap = {
@@ -16,6 +17,7 @@ const routeConfigMap = {
   Image: ImageScreen,
   Counter: CounterScreen,
   Color: ColorScreen,
+  ColorMix: ColorMixScreen,
 };
 
 const navigator = createStackNavigator(
@@ -24,9 +26,9 @@ const navigator = createStackNavigator(
     ...routeConfigMap
   },
   {
-    initialRouteName: "Color",
+    initialRouteName: "ColorMix",
     initialRouteParams: {
-      routes: Object.keys(routeConfigMap)
+      routes: Object.keys(routeConfigMap).reverse()
     },
     defaultNavigationOptions: {
       title: "React Native Hooks Course",
