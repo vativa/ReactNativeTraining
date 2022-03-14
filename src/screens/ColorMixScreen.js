@@ -1,26 +1,45 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { Button, Text, FlatList, View, StyleSheet } from 'react-native';
 import ColorMixer from '../components/ColorMixer';
 
-const less = (num, step = 5) => step < num ? num - step : 0;
-const more = (num, step = 5) => step + num < 255 ? num + step : 255;
+const STEP = 20;
+const change = (c, s) => {
+  if (s > 0) return c + s < 255 ? c + s : 255;
+  return (-1 * s) < c ? c + s : 0;
+}
+
+const RED = 'RED';
+const GREEN = 'GREEN';
+const BLUE = 'BLUE';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case RED:
+      return { ...state, r: change(state.r, action.payload) };
+    case GREEN:
+      return { ...state, g: change(state.g, action.payload) };
+    case BLUE:
+      return { ...state, b: change(state.b, action.payload) };
+    default:
+      return { ...state };
+  }
+};
 
 const ColorMixScreen = () => {
-  const [{ r, g, b }, mix] = useState({ r: 255, g: 255, b: 255 });
-  console.log('>>> ', r, g, b);
+  const [{ r, g, b }, dispatch] = useReducer(reducer, { r: 255, g: 255, b: 255 });
   return <View style={styles.view}>
     <Text style={[styles.text, { margin: 20 }]}>ColorMixScreen</Text>
     <ColorMixer
-      onLess={() => mix({ r: less(r, 20), g, b })}
-      onMore={() => mix({ r: more(r, 20), g, b })}
+      onLess={() => dispatch({ type: RED, payload: -1 * STEP })}
+      onMore={() => dispatch({ type: RED, payload: STEP })}
     >RED</ColorMixer>
     <ColorMixer
-      onLess={() => mix({ r, g: less(g, 20), b })}
-      onMore={() => mix({ r, g: more(g, 20), b })}
+      onLess={() => dispatch({ type: GREEN, payload: -1 * STEP })}
+      onMore={() => dispatch({ type: GREEN, payload: STEP })}
     >GREEN</ColorMixer>
     <ColorMixer
-      onLess={() => mix({ r, g, b: less(b, 20) })}
-      onMore={() => mix({ r, g, b: more(b, 20) })}
+      onLess={() => dispatch({ type: BLUE, payload: -1 * STEP })}
+      onMore={() => dispatch({ type: BLUE, payload: STEP })}
     >BLUE</ColorMixer>
     <View style={[styles.centered, styles.view]}>
       <Text style={styles.text}>{printColor(r, g, b).hex}, {printColor(r, g, b).rgb}</Text>
