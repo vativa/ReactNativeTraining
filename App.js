@@ -9,6 +9,7 @@ import CounterScreen from './src/screens/CounterScreen';
 import ColorScreen from './src/screens/ColorScreen';
 import ColorMixScreen from './src/screens/ColorMixScreen';
 import TextInputScreen from './src/screens/TextInputScreen';
+import LayoutScreen from './src/screens/LayoutScreen';
 
 // Routes without home screen
 const routeConfigMap = {
@@ -20,6 +21,7 @@ const routeConfigMap = {
   Color: ColorScreen,
   ColorMix: ColorMixScreen,
   TextInput: TextInputScreen,
+  Layout: LayoutScreen,
 };
 
 const navigator = createStackNavigator(
@@ -28,7 +30,7 @@ const navigator = createStackNavigator(
     ...routeConfigMap
   },
   {
-    initialRouteName: "TextInput",
+    initialRouteName: "Layout",
     initialRouteParams: {
       routes: Object.keys(routeConfigMap).reverse()
     },

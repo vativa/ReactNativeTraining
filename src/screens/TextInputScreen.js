@@ -1,26 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, TextInput, View, StyleSheet } from 'react-native';
 
 const TextInputScreen = () => {
-  return <View style={styles.view}>
-    <Text style={[styles.header, styles.text]}>TextInputScreen</Text>
+  const [password, setPassword] = useState('');
+  return <View style={styles.screen}>
+    <Text style={[styles.text, styles.label]}>Enter your password:</Text>
     <TextInput
+      value={password}
+      onChangeText={setPassword}
       autoCorrect={false}
       autoCapitalize="none"
       style={styles.input}
     />
-  </View>
+    {password.length > 5 ||
+    <Text style={[styles.text, styles.label, styles.error]}>
+      Password must be longer than 5 characters
+    </Text>
+    }
+  </View>;
 };
 
 const styles = StyleSheet.create({
-  view: {
+  screen: {
     margin: 10,
-  },
-  header: {
-    margin: 15,
+    paddingTop: 10,
   },
   text: {
     fontSize: 20
+  },
+  label: {
+    paddingHorizontal: 30,
+  },
+  error: {
+    color: '#cc3333',
   },
   input: {
     margin: 15,
@@ -29,7 +41,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderWidth: 2,
     borderRadius: 5,
-    borderColor: '#69f',
+    borderColor: '#6699ff',
   }
 });
 
