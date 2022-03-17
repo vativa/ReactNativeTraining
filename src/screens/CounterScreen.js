@@ -1,5 +1,11 @@
-import React, { useReducer } from 'react';
+import React, { useState }  from 'react';
 import { Button, Text, View, StyleSheet } from 'react-native';
+
+const useReducer = (reducer, initState) => {
+  const [state, setState] = useState(initState);
+  const dispatch = action => setState(reducer(state, action));
+  return [state, dispatch];
+};
 
 const INCREMENT = 'INCREMENT';
 const DECREMENT = 'DECREMENT';
