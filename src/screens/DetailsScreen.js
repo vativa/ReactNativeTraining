@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 
 const DetailsScreen = () => {
-  return <View style={styles.container}>
+  return <>
     <Text style={styles.text}>DetailsScreen</Text>
-  </View>
+  </>;
 };
 
 const styles = StyleSheet.create({
