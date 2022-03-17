@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextInput, View, StyleSheet } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 
-const SearchBar = ({ search, onSearch, onSubmit }) => {
+const SearchBar = ({ onSubmit }) => {
+  const [term, setTerm] = useState('');
   return <View style={styles.searchbar}>
     <EvilIcons name="search" size={35} />
     <TextInput
       placeholder="Search"
-      value={search}
-      onChangeText={onSearch}
-      onEndEditing={onSubmit}
+      value={term}
+      onChangeText={setTerm}
+      onEndEditing={() => onSubmit(term)}
       autoCapitalize="none"
       autoCorrect={false}
       style={styles.input}
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     alignSelf: 'stretch',
-    margin: 5,
+    marginBottom: 20,
     padding: 5,
     paddingRight: 10,
     height: 50,

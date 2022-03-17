@@ -1,56 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import SearchBar from '../components/SearchBar';
-import yelp from '../api/yelp';
+import useResults from '../hooks/useResults';
+import RestaurantList from '../components/RestaurantList';
 
 const SearchScreen = () => {
-  const [term, setTerm] = useState('');
-  const [results, setResults] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
-  
-  const searchApi = async () => {
-    try {
-      const { data: { businesses } } = await yelp.get('/search', {
-        params: {
-          limit: 50,
-          term,
-          location: 'san jose'
-        }
-      });
-      console.log('>>> ', businesses);
-      setResults(businesses);
-      setErrorMessage('');
-    } catch (err) {
-      console.log('>>> ', err.message);
-      setErrorMessage(err.message);
-    }
-  };
-  
+  const [results, errorMessage, searchApi] = useResults();
+
   return <View style={styles.container}>
-    <SearchBar
-      search={term}
-      onSearch={setTerm}
-      onSubmit={searchApi}
-    />
+    <SearchBar onSubmit={searchApi} />
     {errorMessage.length > 0 && <Text style={styles.error}>{errorMessage}</Text>}
-    <Text style={styles.text}>We have found {results.length} results</Text>
+    <RestaurantList restaurants={results.c} category="Cost Effective" />
+    <RestaurantList restaurants={results.b} category="Bit Pricier" />
+    <RestaurantList restaurants={results.a} category="Big Spender" />
   </View>;
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    paddingTop: 20,
     paddingHorizontal: 30,
-    paddingVertical: 20,
     backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#999999',
-  },
-  text: {
-    marginVertical: 20,
-    fontSize: 20,
   },
   error: {
     fontSize: 16,
