@@ -12,7 +12,10 @@ const RestaurantList = ({ restaurants, category }) => {
       keyExtractor={({ id }, index) => id}
       renderItem={({ item }) => <RestaurantView restaurant={item} />}
     />
-    <Text style={styles.details}>{category} | {restaurants.length || 0} places found</Text>
+    <View style={styles.details}>
+      <Text style={[styles.bold, styles.text]}>{category}</Text>
+      <Text style={styles.text}> | {restaurants.length || 0} places found</Text>
+    </View>
   </View>
 };
 
@@ -21,8 +24,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   details: {
-    marginHorizontal: 10,
+    flexDirection: 'row',
+    alignContent: 'center',
+    marginHorizontal: 22,
+  },
+  text: {
     fontSize: 18,
+  },
+  bold: {
+    fontWeight: 'bold',
   },
 });
 

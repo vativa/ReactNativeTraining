@@ -1,13 +1,13 @@
 import React from 'react'
 import { Image, Text, View, StyleSheet } from 'react-native'
 
-const RestaurantView = ({ restaurant: { name, rating, image_url } }) => {
+const RestaurantView = ({ restaurant: { name, rating, review_count, image_url } }) => {
   // console.log('>>> restaurant ', name, image_url);
   return <View style={styles.view}>
     <Image source={{ uri: image_url }} style={styles.image} />
     <View style={styles.details}>
       <Text style={styles.text}>{name}</Text>
-      <Text style={styles.text}>Rated {rating}</Text>
+      <Text style={styles.text}>{rating} Stars | {review_count} Reviews</Text>
     </View>
   </View>
 };
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     width: 300,
     height: 200,
-    marginHorizontal: 5,
+    marginLeft: 20,
     marginBottom: 10,
   },
   image: {
@@ -27,8 +27,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     borderRadius: 5,
-    borderColor: 'salmon',
-    borderWidth: 1,
   },
   details: {
     justifyContent: 'center',
@@ -39,7 +37,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     borderRadius: 5,
     borderColor: '#ccc',
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   text: {
     fontSize: 18,
