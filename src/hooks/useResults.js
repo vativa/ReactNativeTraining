@@ -15,9 +15,7 @@ const useResults = () => {
           location: "Berlin"
         }
       });
-      console.log('>>> businesses ', businesses);
       const restaurants = businesses.reduce((sorted, restaurant) => {
-        // console.log('>>> reducer ', sorted, restaurant);
         switch (true) {
           case restaurant.price == '€€':
             sorted.a.push(restaurant);
@@ -30,7 +28,6 @@ const useResults = () => {
         }
         return sorted;
       }, { a: [], b: [], c: [] });
-      // console.log('>>> sorted restaurants ', restaurants);
       setResults(restaurants);
       setErrorMessage('');
     } catch (err) {

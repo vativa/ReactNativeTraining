@@ -2,7 +2,6 @@ import React from 'react'
 import { Image, Text, View, StyleSheet } from 'react-native'
 
 const RestaurantView = ({ restaurant: { name, rating, review_count, image_url } }) => {
-  // console.log('>>> restaurant ', name, image_url);
   return <View style={styles.view}>
     <Image source={{ uri: image_url }} style={styles.image} />
     <View style={styles.details}>
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    borderRadius: 5,
+    borderRadius: 4,
   },
   details: {
     justifyContent: 'center',
