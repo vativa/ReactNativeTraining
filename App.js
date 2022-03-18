@@ -26,11 +26,11 @@ const routeConfigMap = {
 
 const navigator = createStackNavigator(
   {
-    Home: HomeScreen,
+    Home: 'Home',
     ...routeConfigMap
   },
   {
-    initialRouteName: "Layout",
+    initialRouteName: "ColorMix",
     initialRouteParams: {
       routes: Object.keys(routeConfigMap).reverse()
     },

@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useState } from 'react';
 import { Button, Text, FlatList, View, StyleSheet } from 'react-native';
 import ColorMixer from '../components/ColorMixer';
 
@@ -11,6 +11,12 @@ const change = (c, s) => {
 const RED = 'RED';
 const GREEN = 'GREEN';
 const BLUE = 'BLUE';
+
+const useReducer = (reducer, initState) => {
+  const [state, setState] = useState(initState);
+  const dispatch = action => setState(reducer(state, action));
+  return [state, dispatch];
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
