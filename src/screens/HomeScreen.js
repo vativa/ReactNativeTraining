@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Button, FlatList, Text, View, StyleSheet } from 'react-native';
-import { Context } from '../store/index';
+import { Context } from '../store';
 import { actionCreators as postActionCreators } from '../store/stores/posts';
 
 const HomeScreen = ({}) => {
