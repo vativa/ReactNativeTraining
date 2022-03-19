@@ -8,7 +8,7 @@ const DetailsScreen = ({ navigation }) => {
 
   useEffect(() => {
     yelp.get(`/${id}`).then(({ data: restaurant }) => {
-      console.log('>>> restaurant ', restaurant);
+      // console.log('>>> restaurant ', restaurant);
       setRestaurant(restaurant);
     }).catch(e => {
       throw e.message;

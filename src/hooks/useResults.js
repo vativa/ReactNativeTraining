@@ -36,7 +36,9 @@ const useResults = () => {
     }
   };
 
-  useEffect(() => searchApi('pasta'), []);
+  useEffect(() => {
+    searchApi('pasta');
+  }, []);
   
   return [results, errorMessage, searchApi];
 };
