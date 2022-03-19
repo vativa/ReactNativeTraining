@@ -1,7 +1,6 @@
 node_modules/
-npm-debug.*
-web-build/
 .DS_Store
 .vscode/
 .idea/
 .expo/
+.expo-shared/
