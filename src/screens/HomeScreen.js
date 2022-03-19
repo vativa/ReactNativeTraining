@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
 import { Button, FlatList, Text, View, StyleSheet } from 'react-native';
-import BlogContext from '../context/BlogContext';
-import { A } from '../context';
+import { Context } from '../store/Context';
+import { actionCreators as postActionCreators } from '../store/posts';
 
 const HomeScreen = ({}) => {
-  const { posts, dispatch } = useContext(BlogContext);
-  
-  const genPost = () => {
-    dispatch({ type: A.CREATE_POST, payload: { title: `Blog Post #${posts.length + 1}` } });
-  };
+  const { state: { posts }, dispatch } = useContext(Context);
+  // console.log('>>> HomeScreen ', posts);
   
   return <View style={styles.container}>
     <Text style={[styles.header, styles.text]}>HomeScreen</Text>
-    <Button title="Generate New Blog Post" onPress={genPost} />
+    <Button
+      title="Generate New Blog Post"
+      onPress={() => dispatch(postActionCreators.createPost(posts.length + 1))}
+    />
     <FlatList
       data={posts}
       keyExtractor={post => post.title}
