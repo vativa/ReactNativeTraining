@@ -1,4 +1,4 @@
-import { reducer as posts } from './posts';
+import { reducer as posts } from './stores/posts';
 
 const combineReducers = reducers => (state = {}, action) => {
   return Object.keys(reducers).reduce(

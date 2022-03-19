@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Button, FlatList, Text, View, StyleSheet } from 'react-native';
-import { Context } from '../store/Context';
-import { actionCreators as postActionCreators } from '../store/posts';
+import { Context } from '../store/index';
+import { actionCreators as postActionCreators } from '../store/stores/posts';
 
 const HomeScreen = ({}) => {
   const { state: { posts }, dispatch } = useContext(Context);
