@@ -1,7 +1,7 @@
 import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import { Provider } from './src/store/index';
+import { Provider } from './src/store';
 import HomeScreen from './src/screens/HomeScreen';
 
 const navigator = createStackNavigator({
