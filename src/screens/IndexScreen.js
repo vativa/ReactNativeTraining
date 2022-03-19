@@ -19,7 +19,7 @@ const HomeScreen = ({}) => {
       keyExtractor={post => post.title}
       renderItem={({ item: { id, title } }) => {
         return <View style={styles.listRow}>
-          <Text style={[styles.text, styles.post]}>{title}</Text>
+          <Text style={[styles.text, styles.post]}>{title} - {id}</Text>
           <TouchableOpacity
             onPress={() => dispatch(postActionCreators.deletePost(id))}
           >
