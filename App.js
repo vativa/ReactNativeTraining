@@ -2,12 +2,16 @@ import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Provider } from 'src/store';
-import HomeScreen from 'src/screens/HomeScreen';
+import IndexScreen from 'src/screens/IndexScreen';
+import CreateScreen from 'src/screens/CreateScreen';
+import PreviewScreen from 'src/screens/PreviewScreen';
 
 const navigator = createStackNavigator({
-  Home: HomeScreen,
+  Index: IndexScreen,
+  Create: CreateScreen,
+  Preview: PreviewScreen,
 }, {
-  initialRouteName: 'Home',
+  initialRouteName: 'Index',
   defaultNavigationOptions: {
     title: "Created by alias create-app-expo",
   }

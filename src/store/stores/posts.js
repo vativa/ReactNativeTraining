@@ -6,8 +6,17 @@ const DELETE_POST = 'DELETE_POST';
 // Let's create actions
 export const actionCreators = {
   createPost: id => {
-    return { type: CREATE_POST, payload: { title: `Blog Post #${id}` } };
+    // Async actions come here
+    return {
+      type: CREATE_POST,
+      payload: {
+        id: Math.floor(Math.random() * 99999),
+        title: `Blog Post #${id}`,
+      },
+    };
   },
+  updatePost: id => {},
+  deletePost: id => ({ type: DELETE_POST, payload: id }),
 };
 
 // Implement reducers
@@ -19,7 +28,7 @@ export const reducer = (state, action) => {
     case UPDATE_POST:
       return [...state];
     case DELETE_POST:
-      return [...state];
+      return state.filter(post => post.id != action.payload);
     default:
       return state;
   }
