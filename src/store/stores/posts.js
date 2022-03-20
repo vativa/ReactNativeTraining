@@ -4,19 +4,26 @@ const UPDATE_POST = 'UPDATE_POST';
 const DELETE_POST = 'DELETE_POST';
 
 // Let's create actions
-export const actionCreators = {
-  createPost: id => {
+export const postActionCreators = {
+  createPost: ({ ...post }, callback) => {
     // Async actions come here
+    // After async completes, clean/unsubscribe
+    callback();
     return {
       type: CREATE_POST,
-      payload: {
-        id: Math.floor(Math.random() * 99999),
-        title: `Blog Post #${id}`,
-      },
+      payload: { ...post },
     };
   },
-  updatePost: id => {},
-  deletePost: id => ({ type: DELETE_POST, payload: id }),
+  updatePost: (post, callback) => {
+    // Async actions come here
+    // After async completes, clean/unsubscribe
+    callback();
+    return {
+      type: UPDATE_POST,
+      payload: { ...post },
+    };
+  },
+  deletePost: index => ({ type: DELETE_POST, payload: index }),
 };
 
 // Implement reducers
@@ -24,11 +31,14 @@ export const reducer = (state, action) => {
   // console.log('>>> appReducer ', state);
   switch (action.type) {
     case CREATE_POST:
-      return [action.payload, ...state];
     case UPDATE_POST:
-      return [...state];
+      const posts = [...state];
+      const { index, ...post } = action.payload;
+      const id = isNaN(index) ? posts.length : index;
+      posts[id] = { ...post };
+      return posts;
     case DELETE_POST:
-      return state.filter(post => post.id != action.payload);
+      return state.filter((post, index) => index != action.payload);
     default:
       return state;
   }

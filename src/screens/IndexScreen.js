@@ -1,37 +1,42 @@
 import React, { useContext } from 'react';
-import { Button, FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Context } from 'src/store';
-import { actionCreators as postActionCreators } from 'src/store/stores/posts';
+import { postActionCreators as pac } from 'src/store/stores/posts';
 
-const HomeScreen = ({}) => {
+const IndexScreen = ({ navigation: { navigate } }) => {
   const { state: { posts }, dispatch } = useContext(Context);
   // console.log('>>> HomeScreen ', posts);
   
   return <View style={styles.container}>
-    <Text style={[styles.text, styles.header]}>MagicWeb.org Blog</Text>
-    <Button
-      title="Generate New Blog Post"
-      onPress={() => dispatch(postActionCreators.createPost(posts.length + 1))}
-    />
     <FlatList
+      inverted
       data={posts}
-      keyExtractor={post => post.title}
-      renderItem={({ item: { id, title } }) => {
-        return <View style={styles.listRow}>
-          <Text style={[styles.text, styles.post]}>{title} - {id}</Text>
-          <TouchableOpacity
-            onPress={() => dispatch(postActionCreators.deletePost(id))}
-          >
-            <View style={styles.trashWrapper}>
-              <Feather name="trash" style={styles.trash} />
-            </View>
+      keyExtractor={(post, index) => index}
+      renderItem={({ item: post, index }) => {
+        return <View style={[styles.row, index ? styles.borderTop : styles.borderTopBottom]}>
+          <TouchableOpacity onPress={() => navigate('Preview', { index })} style={styles.post}>
+            <Text style={styles.text}>{post.title} --- {index} --- {post.content}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => dispatch(pac.deletePost(index))} style={styles.iconWrapper}>
+            <Feather name="trash" style={styles.icon} />
           </TouchableOpacity>
         </View>;
       }}
       style={styles.list}
+      contentContainerStyle={{ flex:1, justifyContent: 'flex-end' }}
     />
   </View>;
+};
+
+IndexScreen.navigationOptions = ({ navigation: { navigate }}) => {
+  return {
+    headerRight: () => (
+      <TouchableOpacity onPress={() => navigate('Form')} style={styles.headerIconWrapper}>
+        <Feather name="plus" style={styles.icon} style={styles.icon} />
+      </TouchableOpacity>
+    ),
+  };
 };
 
 const styles = StyleSheet.create({
@@ -43,36 +48,47 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingBottom: 10,
   },
-  header: {
-    marginBottom: 20,
-    fontSize: 30,
-  },
   text: {
     fontSize: 20,
     textAlign: 'center',
   },
   list: {
     marginTop: 20,
-    borderTopWidth: StyleSheet.hairlineWidth,
   },
-  listRow: {
+  row: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 10,
+  },
+  borderTop: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  borderBottom: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  borderTopBottom: {
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   post: {
-    marginBottom: 5,
+    height: 55,
+    flex: 1,
+    justifyContent: 'center',
+    margin: 10,
   },
-  trashWrapper: {
+  iconWrapper: {
     padding: 15,
     borderRadius: 50,
     borderWidth: StyleSheet.hairlineWidth,
   },
-  trash: {
+  headerIconWrapper: {
+    marginRight: 20,
+    padding: 15,
+    // borderWidth: StyleSheet.hairlineWidth,
+  },
+  icon: {
     fontSize: 20,
   },
 });
 
-export default HomeScreen;
+export default IndexScreen;

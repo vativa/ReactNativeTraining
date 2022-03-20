@@ -3,17 +3,17 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { Provider } from 'src/store';
 import IndexScreen from 'src/screens/IndexScreen';
-import CreateScreen from 'src/screens/CreateScreen';
 import PreviewScreen from 'src/screens/PreviewScreen';
+import FormScreen from 'src/screens/FormScreen';
 
 const navigator = createStackNavigator({
   Index: IndexScreen,
-  Create: CreateScreen,
   Preview: PreviewScreen,
+  Form: FormScreen,
 }, {
   initialRouteName: 'Index',
   defaultNavigationOptions: {
-    title: "Created by alias create-app-expo",
+    title: "MagicWeb.org BlogPost",
   }
 });
 
