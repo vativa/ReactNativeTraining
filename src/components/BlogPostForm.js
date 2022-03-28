@@ -1,19 +1,9 @@
-import { Feather } from '@expo/vector-icons';
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { Context } from 'src/store';
-import { postActionCreators as pac } from 'src/store/stores/posts';
+import { Feather } from '@expo/vector-icons';
 
-const BlogPostForm = ({ navigation: { navigate, getParam } }) => {
-  const [{ index, ...post }, setPost] = useState({ title: 'change title', content: 'change content' });
-  const { dispatch, state: { posts } } = useContext(Context);
-// console.log('>>> Form::render::params ', params, posts[params?.index]);
-  
-  useEffect(() => {
-    // console.log('>>> Form::useEffect::params ', params, posts[params?.index]);
-    const index = getParam('index');
-    isNaN(index) || setPost({ ...posts[index], index });
-  }, []);
+const BlogPostForm = ({ post: initPost, onSubmit }) => {
+  const [post, setPost] = useState({ ...initPost });
   
   return <View style={styles.form}>
     <Text style={styles.label}>Enter Title</Text>
@@ -21,7 +11,7 @@ const BlogPostForm = ({ navigation: { navigate, getParam } }) => {
       placeholder="Title"
       autoFocus
       value={post.title}
-      onChangeText={title => setPost({ ...post, index, title })}
+      onChangeText={title => setPost({ ...post, title })}
       autoCapitalize="none"
       autoCorrect={false}
       style={styles.input}
@@ -30,21 +20,13 @@ const BlogPostForm = ({ navigation: { navigate, getParam } }) => {
     <TextInput
       placeholder="Content"
       value={post.content}
-      onChangeText={content => setPost({ ...post, index, content })}
+      onChangeText={content => setPost({ ...post, content })}
       autoCapitalize="none"
       autoCorrect={false}
       style={styles.input}
     />
-    <TouchableOpacity
-      onPress={() => {
-        dispatch(isNaN(index)
-          ? pac.createPost(post, () => navigate('Index'))
-          : pac.updatePost({ ...post, index }, () => navigate('Preview', { index })),
-        );
-      }}
-      style={styles.iconButton}
-    >
-      <Text style={styles.buttonLabel}>{isNaN(index) ? 'Create New Post' : `Update Post #${index}`}</Text>
+    <TouchableOpacity onPress={() => onSubmit(post)} style={styles.iconButton}>
+      <Text style={styles.buttonLabel}>{isNaN(post.id) ? 'Create New Post' : `Update Post #${post.id}`}</Text>
       <Feather name="send" style={styles.icon} />
     </TouchableOpacity>
   </View>;

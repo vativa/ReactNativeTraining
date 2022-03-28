@@ -1,26 +1,16 @@
 // First lets describe actions
-const CREATE_POST = 'CREATE_POST';
-const UPDATE_POST = 'UPDATE_POST';
+const MANAGE_POST = 'MANAGE_POST';
 const DELETE_POST = 'DELETE_POST';
 
 // Let's create actions
 export const postActionCreators = {
-  createPost: ({ ...post }, callback) => {
+  managePost: (post, callback) => {
     // Async actions come here
     // After async completes, clean/unsubscribe
     callback();
     return {
-      type: CREATE_POST,
-      payload: { ...post },
-    };
-  },
-  updatePost: (post, callback) => {
-    // Async actions come here
-    // After async completes, clean/unsubscribe
-    callback();
-    return {
-      type: UPDATE_POST,
-      payload: { ...post },
+      type: MANAGE_POST,
+      payload: post,
     };
   },
   deletePost: index => ({ type: DELETE_POST, payload: index }),
@@ -30,12 +20,11 @@ export const postActionCreators = {
 export const reducer = (state, action) => {
   // console.log('>>> appReducer ', state);
   switch (action.type) {
-    case CREATE_POST:
-    case UPDATE_POST:
+    case MANAGE_POST:
       const posts = [...state];
-      const { index, ...post } = action.payload;
-      const id = isNaN(index) ? posts.length : index;
-      posts[id] = { ...post };
+      const { id, ...post } = action.payload;
+      const index = isNaN(id) ? posts.length : id;
+      posts[index] = post;
       return posts;
     case DELETE_POST:
       return state.filter((post, index) => index != action.payload);
