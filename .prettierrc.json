@@ -1,4 +1,19 @@
 {
+  "printWidth": 100,
   "singleQuote": true,
-  "arrowParens": "avoid"
+  "arrowParens": "avoid",
+  "overrides": [
+    {
+      "files": ["*.html", "legacy/**/*.js"],
+      "options": {
+        "tabWidth": 4
+      }
+    },
+    {
+      "files": [".prettierrc.json", "package.json"],
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
 }

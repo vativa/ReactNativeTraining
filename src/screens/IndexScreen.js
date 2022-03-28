@@ -5,31 +5,43 @@ import { Context } from 'src/store';
 import { postActionCreators as pac } from 'src/store/stores/posts';
 
 const IndexScreen = ({ navigation: { navigate } }) => {
-  const { state: { posts }, dispatch } = useContext(Context);
+  const {
+    state: { posts },
+    dispatch,
+  } = useContext(Context);
   // console.log('>>> HomeScreen ', posts);
-  
-  return <View style={styles.container}>
-    <FlatList
-      inverted
-      data={posts}
-      keyExtractor={(post, index) => index}
-      renderItem={({ item: post, index }) => {
-        return <View style={[styles.row, index ? styles.borderTop : styles.borderTopBottom]}>
-          <TouchableOpacity onPress={() => navigate('Preview', { index })} style={styles.post}>
-            <Text style={styles.text}>{post.title} --- {index} --- {post.content}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => dispatch(pac.deletePost(index))} style={styles.iconWrapper}>
-            <Feather name="trash" style={styles.icon} />
-          </TouchableOpacity>
-        </View>;
-      }}
-      style={styles.list}
-      contentContainerStyle={{ flex:1, justifyContent: 'flex-end' }}
-    />
-  </View>;
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        inverted
+        data={posts}
+        keyExtractor={(post, index) => index}
+        renderItem={({ item: post, index }) => {
+          return (
+            <View style={[styles.row, index ? styles.borderTop : styles.borderTopBottom]}>
+              <TouchableOpacity onPress={() => navigate('Preview', { index })} style={styles.post}>
+                <Text style={styles.text}>
+                  {post.title} --- {index} --- {post.content}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => dispatch(pac.deletePost(index))}
+                style={styles.iconWrapper}
+              >
+                <Feather name="trash" style={styles.icon} />
+              </TouchableOpacity>
+            </View>
+          );
+        }}
+        style={styles.list}
+        contentContainerStyle={{ flex: 1, justifyContent: 'flex-end' }}
+      />
+    </View>
+  );
 };
 
-IndexScreen.navigationOptions = ({ navigation: { navigate }}) => {
+IndexScreen.navigationOptions = ({ navigation: { navigate } }) => {
   return {
     headerRight: () => (
       <TouchableOpacity onPress={() => navigate('Form')} style={styles.headerIconWrapper}>

@@ -5,15 +5,19 @@ import { EvilIcons } from '@expo/vector-icons';
 import { Context } from 'src/store';
 
 const PreviewScreen = ({ navigation }) => {
-  const { state: { posts } } = useContext(Context);
+  const {
+    state: { posts },
+  } = useContext(Context);
   const id = navigation.getParam('index');
   const { title, content } = posts[id];
   // console.log('>>> Preview::render ', id);
-  return <>
-    <Text style={styles.text}>index: {id}</Text>
-    <Text style={styles.text}>title: {title}</Text>
-    <Text style={styles.text}>content: {content}</Text>
-  </>;
+  return (
+    <>
+      <Text style={styles.text}>index: {id}</Text>
+      <Text style={styles.text}>title: {title}</Text>
+      <Text style={styles.text}>content: {content}</Text>
+    </>
+  );
 };
 
 PreviewScreen.navigationOptions = ({ navigation: { navigate, getParam } }) => {
@@ -27,7 +31,7 @@ PreviewScreen.navigationOptions = ({ navigation: { navigate, getParam } }) => {
         >
           <EvilIcons name="pencil" style={styles.icon} style={styles.icon} />
         </TouchableOpacity>
-    );
+      );
     },
   };
 };
