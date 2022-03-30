@@ -1,20 +1,19 @@
 import React, { useContext } from 'react';
 import BlogPostForm from 'src/components/BlogPostForm';
 import { Context } from 'src/store';
-import { postActionCreators as pac } from 'src/store/stores/posts';
 
-const FormScreen = ({ navigation: { navigate, getParam } }) => {
-  const { state, dispatch } = useContext(Context);
-  const id = getParam('index');
-  const post = state.posts[id];
-  const callback = () => (isNaN(id) ? navigate('Index') : navigate('Preview', { index: id }));
+const FormScreen = ({ navigation: { pop, getParam } }) => {
+  const {
+    state: { posts },
+    posts: { managePost },
+  } = useContext(Context);
+  const index = getParam('index');
+  const post = posts[index] || {
+    title: 'title',
+    content: 'content',
+  };
 
-  return (
-    <BlogPostForm
-      post={{ ...post, id }}
-      onSubmit={post => dispatch(pac.managePost(post, callback))}
-    />
-  );
+  return <BlogPostForm post={post} onSubmit={post => managePost(post, pop)} />;
 };
 
 export default FormScreen;

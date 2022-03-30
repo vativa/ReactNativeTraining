@@ -2,14 +2,12 @@ import React, { useContext } from 'react';
 import { FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Context } from 'src/store';
-import { postActionCreators as pac } from 'src/store/stores/posts';
 
 const IndexScreen = ({ navigation: { navigate } }) => {
   const {
     state: { posts },
-    dispatch,
+    posts: { deletePost },
   } = useContext(Context);
-  // console.log('>>> HomeScreen ', posts);
 
   return (
     <View style={styles.container}>
@@ -22,13 +20,10 @@ const IndexScreen = ({ navigation: { navigate } }) => {
             <View style={[styles.row, index ? styles.borderTop : styles.borderTopBottom]}>
               <TouchableOpacity onPress={() => navigate('Preview', { index })} style={styles.post}>
                 <Text style={styles.text}>
-                  {post.title} --- {index} --- {post.content}
+                  {post.id}@[{index}] "{post.title}" | "{post.content}"
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => dispatch(pac.deletePost(index))}
-                style={styles.iconWrapper}
-              >
+              <TouchableOpacity onPress={() => deletePost(index)} style={styles.iconWrapper}>
                 <Feather name="trash" style={styles.icon} />
               </TouchableOpacity>
             </View>

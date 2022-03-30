@@ -28,19 +28,12 @@ const BlogPostForm = ({ post: initPost, onSubmit }) => {
       />
       <TouchableOpacity onPress={() => onSubmit(post)} style={styles.iconButton}>
         <Text style={styles.buttonLabel}>
-          {isNaN(post.id) ? 'Create New Post' : `Update Post #${post.id}`}
+          {post.id ? `Update Post #${post.id}` : "Create New Post"}
         </Text>
         <Feather name="send" style={styles.icon} />
       </TouchableOpacity>
     </View>
   );
-};
-
-BlogPostForm.defaultProps = {
-  post: {
-    title: 'title',
-    content: 'content',
-  },
 };
 
 const styles = StyleSheet.create({

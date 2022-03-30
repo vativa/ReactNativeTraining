@@ -1,15 +1,12 @@
-import React, { createContext } from 'react';
-import { useReducer } from './hooks';
+import createContext from './createContext';
 import { reducer } from './reducer';
+import {
+  initState as postInitState,
+  actionCreators as postActionCreators,
+} from 'src/store/stores/posts';
 
-const initState = {
-  posts: [],
-};
-
-export const Context = createContext(initState);
-
-export const Provider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initState);
-  console.log('>>> Provider::state ', state);
-  return <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>;
-};
+export const { Context, Provider } = createContext({
+  reducer,
+  initialState: { posts: postInitState },
+  actions: { posts: { ...postActionCreators } },
+});
