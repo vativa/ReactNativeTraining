@@ -1,34 +1,41 @@
+import React from 'react';
 import axios from 'axios';
-// import A from 'actions/index';
-// import C from 'actions/constants';
-import { dispatch } from 'store/index';
-
-const __DEV__ = process.env.NODE_ENV === C.DEVELOPMENT;
+import { Context } from 'src/store';
+import C from 'src/utils/constants';
 
 // AXIOS
-// console.log('>>> axios', process.env.API_URL);
 const instance = axios.create({
-  baseURL: __DEV__ ? process.env.API_DEV_URL : process.env.API_PROD_URL,
+  baseURL: __DEV__ ? C.REST_DEV : C.REST_PROD,
   headers: {
     Accept: 'application/json; charset=utf-8',
     'Content-Type': 'application/json',
-    'X-API-TOKEN-ORGANIZATION': 'Berliner Taxivereinigung e.V.'
-  }
+    'X-API-TOKEN-ORGANIZATION': 'MagicWeb.org',
+  },
 });
 
 // Add a response interceptor (no effect)
+const {
+  posts: { fetchServer, requestError, cancelFetch, responseError },
+} = React.useContext(Context);
+
+instance.interceptors.request.use(
+  config => {
+    fetchServer(config);
+    return config;
+  },
+  error => {
+    requestError(error);
+    return Promise.reject(error);
+  }
+);
+
 instance.interceptors.response.use(
   response => {
-    // Do something with response data
-    dispatch({ type: A.CANCEL_FETCH });
+    cancelFetch(response);
     return response;
   },
   error => {
-    // Do something on error response
-    dispatch({ type: A.CANCEL_FETCH });
-    if (error.response && error.response.status === 401) {
-      console.error('ERROR.RESPONSE.STATUS === 401');
-    }
+    responseError(error);
     return Promise.reject(error);
   }
 );

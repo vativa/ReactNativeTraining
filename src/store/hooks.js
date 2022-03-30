@@ -2,6 +2,9 @@ import { useState } from 'react';
 
 export const useReducer = (reducer, initState) => {
   const [state, setState] = useState(initState);
-  const dispatch = action => setState(reducer(state, action));
+  const dispatch = action => {
+    setState(reducer(state, action));
+    return action;
+  };
   return [state, dispatch];
 };
