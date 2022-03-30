@@ -5,15 +5,22 @@ import { Context } from 'src/store';
 const FormScreen = ({ navigation: { pop, getParam } }) => {
   const {
     state: { posts },
-    posts: { managePost },
+    posts: { createPost, updatePost, fetchPosts },
   } = useContext(Context);
   const index = getParam('index');
   const post = posts[index] || {
     title: 'title',
     content: 'content',
   };
+  
+  const managePost = isNaN(post.id) ? createPost : updatePost;
 
-  return <BlogPostForm post={post} onSubmit={post => managePost(post, pop)} />;
+  const callback = () => {
+    fetchPosts();
+    pop();
+  };
+
+  return <BlogPostForm post={post} onSubmit={post => managePost(post, callback)} />;
 };
 
 export default FormScreen;

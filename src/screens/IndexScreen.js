@@ -1,13 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { Context } from 'src/store';
 
-const IndexScreen = ({ navigation: { navigate } }) => {
+const IndexScreen = ({ navigation: { navigate, addListener } }) => {
   const {
     state: { posts },
-    posts: { deletePost },
+    posts: { fetchPosts, deletePost },
   } = useContext(Context);
+  
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -23,7 +27,7 @@ const IndexScreen = ({ navigation: { navigate } }) => {
                   {post.id}@[{index}] "{post.title}" | "{post.content}"
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => deletePost(index)} style={styles.iconWrapper}>
+              <TouchableOpacity onPress={() => deletePost(post.id, fetchPosts)} style={styles.iconWrapper}>
                 <Feather name="trash" style={styles.icon} />
               </TouchableOpacity>
             </View>

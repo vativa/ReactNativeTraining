@@ -11,19 +11,16 @@ export const initState = {
 
 export const actionCreators = {
   fetchServer: dispatch => config => {
-    console.log('>>>', dispatch({ type: FETCH_SERVER, payload: config }));
+    dispatch({ type: FETCH_SERVER, payload: config });
   },
   requestError: dispatch => error => {
-    console.log('>>>', dispatch({ type: REQUEST_ERROR, payload: error }));
+    dispatch({ type: REQUEST_ERROR, payload: error });
   },
   cancelFetch: dispatch => response => {
-    console.log('>>>', dispatch({ type: CANCEL_FETCH, payload: response.data }));
+    dispatch({ type: CANCEL_FETCH, payload: response.data });
   },
   responseError: dispatch => error => {
-    console.log('>>>', dispatch({ type: RESPONSE_ERROR, payload: error }));
-    if (error.response && error.response.status === 401) {
-      console.error('ERROR.RESPONSE.STATUS === 401');
-    }
+    dispatch({ type: RESPONSE_ERROR, payload: error });
   },
 };
 
@@ -34,9 +31,17 @@ export const reducer = (state, action) => {
     case CANCEL_FETCH:
       return { ...state, loading: false, response: { data: action.payload, error: null } };
     case REQUEST_ERROR:
-      return { ...state, loading: false, request: { ...state.request, error: action.payload } };
+      return {
+        ...state,
+        loading: false,
+        request: { ...state.request, error: action.payload.toJSON() },
+      };
     case RESPONSE_ERROR:
-      return { ...state, loading: false, response: { data: null, error: action.payload } };
+      return {
+        ...state,
+        loading: false,
+        response: { data: null, error: action.payload.toJSON() },
+      };
     default:
       return state;
   }

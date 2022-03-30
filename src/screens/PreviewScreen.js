@@ -8,13 +8,12 @@ const PreviewScreen = ({ navigation }) => {
     state: { posts }
   } = useContext(Context);
   const index = navigation.getParam('index');
-  const { id, title, content } = posts[index];
   return (
     <>
-      <Text style={styles.text}>id: {id}</Text>
+      <Text style={styles.text}>id: {posts[index]?.id}</Text>
       <Text style={styles.text}>index: {index}</Text>
-      <Text style={styles.text}>title: {title}</Text>
-      <Text style={styles.text}>content: {content}</Text>
+      <Text style={styles.text}>title: {posts[index]?.title}</Text>
+      <Text style={styles.text}>content: {posts[index]?.content}</Text>
     </>
   );
 };
