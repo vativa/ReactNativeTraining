@@ -10,21 +10,13 @@ export const initState = {
 };
 
 export const actionCreators = {
-  fetchServer: dispatch => config => {
-    dispatch({ type: FETCH_SERVER, payload: config });
-  },
-  requestError: dispatch => error => {
-    dispatch({ type: REQUEST_ERROR, payload: error });
-  },
-  cancelFetch: dispatch => response => {
-    dispatch({ type: CANCEL_FETCH, payload: response.data });
-  },
-  responseError: dispatch => error => {
-    dispatch({ type: RESPONSE_ERROR, payload: error });
-  },
+  fetchServer: config => ({ type: FETCH_SERVER, payload: config }),
+  requestError: error => ({ type: REQUEST_ERROR, payload: error }),
+  cancelFetch: response => ({ type: CANCEL_FETCH, payload: response.data }),
+  responseError: error => ({ type: RESPONSE_ERROR, payload: error }),
 };
 
-export const reducer = (state, action) => {
+export const reducer = (state = initState, action) => {
   switch (action.type) {
     case FETCH_SERVER:
       return { ...state, loading: true, request: { config: action.payload, error: null } };
@@ -34,13 +26,13 @@ export const reducer = (state, action) => {
       return {
         ...state,
         loading: false,
-        request: { ...state.request, error: action.payload.toJSON() },
+        request: { ...state.request, error: action.payload?.toJSON() },
       };
     case RESPONSE_ERROR:
       return {
         ...state,
         loading: false,
-        response: { data: null, error: action.payload.toJSON() },
+        response: { data: null, error: action.payload?.toJSON() },
       };
     default:
       return state;

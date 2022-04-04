@@ -4,9 +4,8 @@ import { EvilIcons } from '@expo/vector-icons';
 import { Context } from 'src/store';
 
 const PreviewScreen = ({ navigation }) => {
-  const {
-    state: { posts }
-  } = useContext(Context);
+  const { getState } = useContext(Context);
+  const { posts } = getState();
   const index = navigation.getParam('index');
   return (
     <>
